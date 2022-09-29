@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { config } from "react-spring";
 import styled from "styled-components";
 
-import Carousel from "../../../Nav/Carousel/index.tsx";
+import Carousel from "../../../Nav/Carousel/index.jsx";
 import { useWindowSize } from "../../../utils/hooks/useWindowSize";
 
 export default function Navigator() {

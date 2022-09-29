@@ -3,14 +3,8 @@ import { AnimatePresence } from "framer-motion";
 import { Route, Switch, useLocation } from "react-router-dom";
 import { MountTransition } from "../MountTransition";
 
-type Props = {
-  exact?: boolean;
-  path: string;
-  slide?: number;
-  slideUp?: number;
-};
 
-export const RouteTransition: FC<Props> = ({
+export const RouteTransition= ({
   children,
   exact = false,
   path,
@@ -25,12 +19,8 @@ export const RouteTransition: FC<Props> = ({
   </Route>
 );
 
-type RoutesProps = {
-  exitBeforeEnter?: boolean;
-  initial?: boolean;
-};
 
-export const AnimatedRoutes: FC<RoutesProps> = ({
+export const AnimatedRoutes= ({
   children,
   exitBeforeEnter = true,
   initial = false

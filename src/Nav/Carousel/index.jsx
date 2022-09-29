@@ -32,42 +32,17 @@ const NavigationButtons = styled.div`
 
 const DEFAULT_GO_TO_SLIDE_DELAY = 200;
 
-interface IState {
-  index: number;
-  goToSlide: number | null;
-  prevPropsGoToSlide: number;
-  newSlide: boolean;
-}
-
-type Slide = {
-  key: number;
-  content: ReactHTMLElement<HTMLElement>;
-  image: string;
-  onClick: () => void;
-};
-
-interface IProps {
-  slides: Slide[];
-  goToSlide?: number;
-  showNavigation: boolean;
-  offsetRadius: number;
-  animationConfig: object;
-  goToSlideDelay: number;
-}
-
-function mod(a: number, b: number): number {
+function mod(a, b) {
   return ((a % b) + b) % b;
 }
 
-class Carousel extends Component<IProps, IState> {
-  state: IState = {
+class Carousel extends Component {
+  state = {
     index: 0,
     goToSlide: null,
     prevPropsGoToSlide: 0,
     newSlide: false
   };
-
-  goToIn?: number;
 
   static propTypes = {
     slides: PropTypes.arrayOf(
@@ -89,7 +64,7 @@ class Carousel extends Component<IProps, IState> {
     goToSlideDelay: DEFAULT_GO_TO_SLIDE_DELAY
   };
 
-  static getDerivedStateFromProps(props: IProps, state: IState) {
+  static getDerivedStateFromProps(props, state) {
     const { goToSlide } = props;
 
     if (goToSlide !== state.prevPropsGoToSlide) {
@@ -120,18 +95,18 @@ class Carousel extends Component<IProps, IState> {
     }
   }
 
-  modBySlidesLength = (index: number): number => {
+  modBySlidesLength = (index) => {
     return mod(index, this.props.slides.length);
   };
 
-  moveSlide = (direction: -1 | 1) => {
+  moveSlide = (direction) => {
     this.setState({
       index: this.modBySlidesLength(this.state.index + direction),
       goToSlide: null
     });
   };
 
-  getShortestDirection(from: number, to: number): -1 | 0 | 1 {
+  getShortestDirection(from, to) {
     if (from > to) {
       if (from - to > this.props.slides.length - 1 - from + to) {
         return 1;
@@ -166,7 +141,7 @@ class Carousel extends Component<IProps, IState> {
     }
   };
 
-  clampOffsetRadius(offsetRadius: number): number {
+  clampOffsetRadius(offsetRadius) {
     const { slides } = this.props;
     const upperBound = Math.floor((slides.length - 1) / 2);
 
@@ -180,12 +155,12 @@ class Carousel extends Component<IProps, IState> {
     return offsetRadius;
   }
 
-  getPresentableSlides(): Slide[] {
+  getPresentableSlides() {
     const { slides } = this.props;
     const { index } = this.state;
     let { offsetRadius } = this.props;
     offsetRadius = this.clampOffsetRadius(offsetRadius);
-    const presentableSlides: Slide[] = new Array();
+    const presentableSlides = new Array();
 
     for (let i = -offsetRadius; i < 1 + offsetRadius; i++) {
       presentableSlides.push(slides[this.modBySlidesLength(index + i)]);
@@ -194,7 +169,7 @@ class Carousel extends Component<IProps, IState> {
     return presentableSlides;
   }
 
-  handleArrowNavigation(direction: string): void {
+  handleArrowNavigation(direction) {
     if (direction === RIGHT.toLowerCase()) {
       this.moveSlide(1);
     } else if (direction === LEFT.toLowerCase()) {
@@ -202,7 +177,7 @@ class Carousel extends Component<IProps, IState> {
     }
   }
 
-  calcDicstanceFactor(index: number, offset: number) {
+  calcDicstanceFactor(index, offset) {
     const thisOffset = offset;
     const thisOffsetFromCenter = index - thisOffset;
     const distanceFactor =
@@ -219,7 +194,7 @@ class Carousel extends Component<IProps, IState> {
         <Wrapper>
           <div>
             {this.getPresentableSlides().map(
-              (slide: Slide, presentableIndex: number) => (
+              (slide, presentableIndex) => (
                 <Slide
                   key={slide.key}
                   thisKey={slide.key}
@@ -242,7 +217,7 @@ class Carousel extends Component<IProps, IState> {
           <p onClick={() => this.moveSlide(1)}>right</p>
           <DotList>
             {this.getPresentableSlides().map(
-              (slide: Slide, presentableIndex: number) => (
+              (slide, presentableIndex) => (
                 <Bullet
                   className={classnames(
                     presentableIndex === this.props.goToSlide ? "active" : null

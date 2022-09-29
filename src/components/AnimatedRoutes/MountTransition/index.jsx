@@ -1,13 +1,7 @@
 import React, { FC } from "react";
 import { motion } from "framer-motion";
 
-type Props = {
-  slide?: number;
-  slideUp?: number;
-  duration?: number;
-};
-
-export const MountTransition: FC<Props> = ({
+export const MountTransition = ({
   children,
   slide = 0,
   slideUp = 0,

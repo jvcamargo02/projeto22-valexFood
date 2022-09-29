@@ -9,7 +9,7 @@ import About from "./pages/About";
 import {
   AnimatedRoutes,
   RouteTransition
-} from "./components/AnimatedRoutes/RouteTransition/index.tsx";
+} from "./components/AnimatedRoutes/RouteTransition/index.jsx";
 import Logo from "./components/common/Logo/index";
 import { useWindowSize } from "./utils/hooks/useWindowSize";
 
